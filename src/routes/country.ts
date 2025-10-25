@@ -13,12 +13,11 @@ routes.get("/", async (req, res) => {
   }
 });
 
-routes.post("/", async (req, res) => {
+routes.get("/add/{$name}", async (req, res) => {
   try {
-    const country: ICountry = req.body;
 
     const countryExists = await CountryModel.findOne({
-      name: country.name,
+      name: namee,
     }).exec();
 
     if (countryExists) {
