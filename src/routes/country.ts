@@ -17,7 +17,7 @@ routes.get("/add/{$name}", async (req, res) => {
   try {
 
     const countryExists = await CountryModel.findOne({
-      name: namee,
+      name: name,
     }).exec();
 
     if (countryExists) {
