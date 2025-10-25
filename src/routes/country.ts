@@ -13,25 +13,26 @@ routes.get("/", async (req, res) => {
   }
 });
 
-routes.get("/add/{$name}", async (req, res) => {
+router.get("/add/:name", async (req, res) => {
   try {
+    const { name } = req.params;
 
-    const countryExists = await CountryModel.findOne({
-      name: name,
-    }).exec();
-
+    // Check if country already exists
+    const countryExists = await CountryModel.findOne({ name }).exec();
     if (countryExists) {
       return res
         .status(409)
         .json({ error: "There is already another country with this name" });
     }
 
-    const newCountry = await CountryModel.create(country);
+    // Create a new country
+    const newCountry = await CountryModel.create({ name });
     return res.status(201).json(newCountry);
+
   } catch (error) {
     console.error(error);
     return res.status(500).json({ error: "Sorry, something went wrong :/" });
   }
-});
+})
 
 export default routes;
